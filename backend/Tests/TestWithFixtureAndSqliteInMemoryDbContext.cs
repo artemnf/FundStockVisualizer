@@ -1,8 +1,6 @@
-using TestSupport.EfHelpers;
-using System;
-using Microsoft.Data.Sqlite;
-using Microsoft.EntityFrameworkCore;
+using AutoFixture;
 using FundDataApi.Data;
+using TestSupport.EfHelpers;
 
 namespace FundDataApi.Tests;
 
@@ -17,6 +15,8 @@ public class TestWithFixtureAndSqliteInMemoryDbContext : TestWithFixture
 
         var dbContext = DbContextFactory();
         dbContext.Database.EnsureCreated();
+
+        Fixture.Inject(dbContext);
     }
 
     protected Func<FundDataDbContext> DbContextFactory => _dbContextFactory;

@@ -19,5 +19,10 @@ internal class FundConfiguration : IEntityTypeConfiguration<Fund>
         builder.Property(x => x.Name)
                .HasMaxLength(255)
                .IsRequired();
+
+        builder.HasMany(x => x.Stocks)
+               .WithOne(x => x.Fund)
+               .HasForeignKey("FundId")
+               .IsRequired(); // We will not track stocks without funds
     }
 }
