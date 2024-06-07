@@ -49,15 +49,23 @@ public class LoadHistoricalDataHandler(FundDataDbContext dbContext,
 
         await dbContext.Set<HistoricalDataPoint>().ExecuteDeleteAsync(); // TODO: might be a better sync solution than wipe out all data points and reload
 
+        var stocksWithFailedRetrival = new List<Stock>();
         foreach (var stock in fund.Stocks)
         {
-            var dataPoints = await externalFinancialApi.GetHistoricalData(stock.Ticker, DateOnly.FromDateTime(DateTime.Now).AddYears(-5));
+            var dataPoints = Enumerable.Empty<HistoricalDataPoint>();
+            try
+            {
+                dataPoints = await externalFinancialApi.GetHistoricalData(stock.Ticker, DateOnly.FromDateTime(DateTime.Now).AddYears(-5));
+            }
+            catch (Exception e)
+            {
+                stocksWithFailedRetrival.Add(stock);
+            }
+            
             foreach (var dataPoint in dataPoints)
             {
                 stock.HistoricalDataPoints.Add(dataPoint);
             }
-
-            await dbContext.SaveChangesAsync(); // 
         }
 
         await dbContext.SaveChangesAsync();
