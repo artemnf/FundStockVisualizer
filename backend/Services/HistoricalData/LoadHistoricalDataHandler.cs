@@ -16,7 +16,7 @@ public class LoadHistoricalDataHandler(FundDataDbContext dbContext,
 
     public async Task Handle(LoadHistoricalDataCommand request, CancellationToken cancellationToken)
     {
-        var sp500Symbols = await mediator.Send(new GetSp500ConstituentsQuery(), cancellationToken);
+        var sp500Symbols = await mediator.Send(new Sp500ConstituentsQuery(), cancellationToken);
 
         var fund = await dbContext.Funds
                                   .Include(x => x.Stocks)

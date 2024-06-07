@@ -4,20 +4,20 @@ using FundDataApi.Services.HistoricalData;
 
 namespace FundDataApi.Tests;
 
-public class GetSp500ConstituentsHandlerTests : TestWithFixture
+public class Sp500ConstituentsQueryHandlerTests : TestWithFixture
 {
-    private readonly GetSp500ConstituentsHandler _sut;
+    private readonly Sp500ConstituentsQueryHandler _sut;
 
-    public GetSp500ConstituentsHandlerTests()
+    public Sp500ConstituentsQueryHandlerTests()
     {
-        _sut = Fixture.Create<GetSp500ConstituentsHandler>();
+        _sut = Fixture.Create<Sp500ConstituentsQueryHandler>();
     }
 
     [Fact]
     public async Task Handle_Returns_Sp500_Constituents_Symbols()
     {
         //Act
-        var results = await _sut.Handle(new GetSp500ConstituentsQuery(), CancellationToken.None);
+        var results = await _sut.Handle(new Sp500ConstituentsQuery(), CancellationToken.None);
 
         //Assert
         results.Should().HaveCount(503); // TODO: will need to update this test everytime S&P 500 changes

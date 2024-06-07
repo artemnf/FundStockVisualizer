@@ -5,9 +5,9 @@ using MediatR;
 
 namespace FundDataApi.Services.HistoricalData;
 
-public class GetSp500ConstituentsHandler() : IRequestHandler<GetSp500ConstituentsQuery, IImmutableList<string>>
+public class Sp500ConstituentsQueryHandler() : IRequestHandler<Sp500ConstituentsQuery, IImmutableList<string>>
 {
-    public async Task<IImmutableList<string>> Handle(GetSp500ConstituentsQuery query, CancellationToken cancellationToken)
+    public async Task<IImmutableList<string>> Handle(Sp500ConstituentsQuery query, CancellationToken cancellationToken)
     {
         var url = "https://en.wikipedia.org/wiki/List_of_S%26P_500_companies#S&P_500_component_stocks";
         var userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36";

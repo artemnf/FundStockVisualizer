@@ -3,4 +3,4 @@ using MediatR;
 
 namespace FundDataApi.Services.HistoricalData;
 
-public class GetSp500ConstituentsQuery : IRequest<IImmutableList<string>>;
+public class Sp500ConstituentsQuery : IRequest<IImmutableList<string>>;
