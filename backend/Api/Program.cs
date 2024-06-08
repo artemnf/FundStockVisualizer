@@ -48,13 +48,13 @@ app.MapGet("/weatherforecast", () =>
 .WithName("GetWeatherForecast")
 .WithOpenApi();
 
-app.MapGet("/test", async (IMediator mediator) =>
+app.MapGet("/HistoricalPrices", async (string symbol, IMediator mediator) =>
 {
-    await mediator.Send(new LoadHistoricalDataCommand());
+    var dataPoints = await mediator.Send(new HistoricalDataPointsQuery{Symbol=symbol});
 
-    return 0;
+    return dataPoints;
 })
-.WithName("Test")
+.WithName("Historical Prices")
 .WithOpenApi();
 
 using (var scope = app.Services.CreateScope())
