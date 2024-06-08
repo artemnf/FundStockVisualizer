@@ -1,7 +1,3 @@
-﻿namespace Entities.Dtos;
+﻿namespace FundDataApi.Entities.Dtos;
 
-public class HistoricalDataPoint
-{
-    public long Ticks {get; set;}
-    public decimal Price {get; set;}
-}
+public record HistoricalDataPoint(long MillisecondsUnixEpoch, decimal Price);

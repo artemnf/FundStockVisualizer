@@ -1,8 +1,10 @@
 using FundDataApi.Data;
+using FundDataApi.Entities.Domain;
 using FundDataApi.Services.ExternalFinancialApi;
 using FundDataApi.Services.HistoricalData;
+using FundDataApi.Services.Stocks;
 using MediatR;
-using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +18,7 @@ builder.Services.AddDbContext<FundDataDbContext>(opts => opts.UseSqlite("Data So
 builder.Services.AddMediatR(c => c.RegisterServicesFromAssembly(typeof(LoadHistoricalDataCommand).Assembly));
 
 builder.Services.AddTransient<IExternalFinancialApi, YahooFinanceApi>();
+builder.Services.AddCors();
 
 var app = builder.Build();
 
@@ -27,34 +30,26 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseCors(cfg => cfg.AllowAnyOrigin()); //TODO: remove allow all CORS
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
 
-app.MapGet("/weatherforecast", () =>
+app.MapGet("/stocks/{id}/historical-prices", async (int id, IMediator mediator, CancellationToken cancellationToken) =>
 {
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast")
-.WithOpenApi();
-
-app.MapGet("/HistoricalPrices", async (string symbol, IMediator mediator) =>
-{
-    var dataPoints = await mediator.Send(new HistoricalDataPointsQuery{Symbol=symbol});
+    var dataPoints = await mediator.Send(new HistoricalDataPointsQuery(StockId: id), cancellationToken);
 
     return dataPoints;
 })
 .WithName("Historical Prices")
+.WithOpenApi();
+
+app.MapGet("/funds/{id}/stocks", async (int id, [FromQuery] string? searchTerm, IMediator mediator, CancellationToken cancellationToken) =>
+{
+    var stocks = await  mediator.Send(new StocksQuery(FundId:id, searchTerm), cancellationToken);
+
+    return stocks;
+})
+.WithName("Fund Stocks")
+.WithTags("Funds")
 .WithOpenApi();
 
 using (var scope = app.Services.CreateScope())
@@ -64,8 +59,3 @@ using (var scope = app.Services.CreateScope())
 }
 
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
