@@ -7,6 +7,7 @@ using FundDataApi.Services.Stocks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,7 +20,6 @@ builder.Services.AddDbContext<FundDataDbContext>(opts => opts.UseSqlite("Data So
 builder.Services.AddMediatR(c => c.RegisterServicesFromAssembly(typeof(LoadHistoricalDataCommand).Assembly));
 
 builder.Services.AddTransient<IExternalFinancialApi, YahooFinanceApi>();
-builder.Services.AddCors();
 
 var app = builder.Build();
 
@@ -31,7 +31,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseCors(cfg => cfg.AllowAnyOrigin()); //TODO: remove allow all CORS
+
+app.UseStaticFiles();
 
 
 app.MapGet("/stocks/{id}/historical-prices", async (int id, IMediator mediator, CancellationToken cancellationToken) =>
