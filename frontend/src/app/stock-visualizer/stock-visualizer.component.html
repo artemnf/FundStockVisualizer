@@ -24,6 +24,14 @@
 <ng-container *ngIf="selectedStock">
   <mat-card class="card">
     <mat-card-content>
+      <app-aggregated-stock-data [stock]="selectedStock"></app-aggregated-stock-data>
+    </mat-card-content>
+  </mat-card>
+</ng-container>
+
+<ng-container *ngIf="selectedStock">
+  <mat-card class="card">
+    <mat-card-content>
       <app-stock-chart [stock]="selectedStock"></app-stock-chart>
     </mat-card-content>
   </mat-card>

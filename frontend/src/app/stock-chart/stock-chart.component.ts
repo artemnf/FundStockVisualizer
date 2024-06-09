@@ -11,7 +11,7 @@ import { HistporicalPrice } from '../models/historical-price';
   templateUrl: './stock-chart.component.html',
   styleUrl: './stock-chart.component.scss'
 })
-export class StockChartComponent implements OnInit, OnChanges {
+export class StockChartComponent implements OnChanges {
   
   @Input() stock!: Stock;
 
@@ -19,11 +19,7 @@ export class StockChartComponent implements OnInit, OnChanges {
 
   stockChart?: StockChart;
 
-  ngOnInit() {
-    
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(): void {
     this.apiService.getStockHistoricalPrices(this.stock.stockId).then((historicalPrices : HistporicalPrice[]) => {
       this.stockChart = new StockChart({
         rangeSelector: {

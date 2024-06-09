@@ -10,6 +10,7 @@ import { Stock } from '../models/stock';
 import { Observable, debounceTime, startWith, switchMap } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { StockChartComponent } from '../stock-chart/stock-chart.component';
+import { AggregatedStockDataComponent } from '../aggregated-stock-data/aggregated-stock-data.component';
 
 
 @Component({
@@ -25,7 +26,8 @@ import { StockChartComponent } from '../stock-chart/stock-chart.component';
     MatOption,
     ReactiveFormsModule,
     CommonModule,
-    StockChartComponent
+    StockChartComponent,
+    AggregatedStockDataComponent
   ]
 })
 export class StockVisualizerComponent {

@@ -35,18 +35,23 @@ app.UseCors(cfg => cfg.AllowAnyOrigin()); //TODO: remove allow all CORS
 
 app.MapGet("/stocks/{id}/historical-prices", async (int id, IMediator mediator, CancellationToken cancellationToken) =>
 {
-    var dataPoints = await mediator.Send(new HistoricalDataPointsQuery(StockId: id), cancellationToken);
-
-    return dataPoints;
+    return await mediator.Send(new HistoricalDataPointsQuery(StockId: id), cancellationToken);
 })
 .WithName("Historical Prices")
+.WithTags("Stocks")
+.WithOpenApi();
+
+app.MapGet("/stocks/{id}/aggregated-data", async (int id, [FromQuery] int years, IMediator mediator, CancellationToken cancellationToken) =>
+{
+    return await mediator.Send(new AggregatedHistoricalStockDataQuery(StockId: id, years), cancellationToken);
+})
+.WithName("Aggregated Data")
+.WithTags("Stocks")
 .WithOpenApi();
 
 app.MapGet("/funds/{id}/stocks", async (int id, [FromQuery] string? searchTerm, IMediator mediator, CancellationToken cancellationToken) =>
 {
-    var stocks = await  mediator.Send(new StocksQuery(FundId:id, searchTerm), cancellationToken);
-
-    return stocks;
+    return await  mediator.Send(new StocksQuery(FundId:id, searchTerm), cancellationToken);
 })
 .WithName("Fund Stocks")
 .WithTags("Funds")

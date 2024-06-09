@@ -3,6 +3,6 @@ using MediatR;
 
 namespace FundDataApi.Services.HistoricalData;
 
-public record AggregatedHistoricalStockDataQuery(int StockId) : IRequest<AggregatedHistoricalStockData>;
+public record AggregatedHistoricalStockDataQuery(int StockId, int Years = 1) : IRequest<AggregatedHistoricalStockData>;
 
 
