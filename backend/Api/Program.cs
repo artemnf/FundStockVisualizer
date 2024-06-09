@@ -1,5 +1,4 @@
 using FundDataApi.Data;
-using FundDataApi.Entities.Domain;
 using FundDataApi.Services.DataManagement;
 using FundDataApi.Services.ExternalFinancialApi;
 using FundDataApi.Services.HistoricalData;
@@ -7,7 +6,6 @@ using FundDataApi.Services.Stocks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +19,8 @@ builder.Services.AddMediatR(c => c.RegisterServicesFromAssembly(typeof(LoadHisto
 
 builder.Services.AddTransient<IExternalFinancialApi, YahooFinanceApi>();
 
+builder.Services.AddCors();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -28,12 +28,13 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+
+    app.UseCors(o => o.AllowAnyOrigin());
 }
 
 app.UseHttpsRedirection();
 
 app.UseStaticFiles();
-
 
 app.MapGet("/stocks/{id}/historical-prices", async (int id, IMediator mediator, CancellationToken cancellationToken) =>
 {

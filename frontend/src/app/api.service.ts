@@ -3,12 +3,13 @@ import { Stock } from './models/stock';
 import { HistporicalPrice } from './models/historical-price';
 import { AggregatedStockData } from './models/aggregated-stock-data';
 import { LoadDataResult } from './models/load-data-result';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
-  private readonly baseUrl = "http://localhost:5092";
+  private readonly baseUrl = environment.baseUrl;
   
   async getFundStocks(fundId: number, searchTerm? : string): Promise<Stock[]> {
     const data = await fetch(`${this.baseUrl}/funds/${fundId}/stocks` + (searchTerm ? `?searchTerm=${searchTerm}` : ''));

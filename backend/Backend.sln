@@ -3,17 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.002.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "backend", "backend", "{2083B7CA-304F-4B32-B387-BBED753D089F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api", "Api\Api.csproj", "{68B618F5-7876-4393-8FE5-4F80A9FE4C27}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api", "backend\Api\Api.csproj", "{68B618F5-7876-4393-8FE5-4F80A9FE4C27}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data", "Data\Data.csproj", "{EB73A4AE-BD5A-4E9F-B261-37CDF7942AEB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data", "backend\Data\Data.csproj", "{EB73A4AE-BD5A-4E9F-B261-37CDF7942AEB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services", "Services\Services.csproj", "{3B0F6092-C7DE-431D-9F0D-EBCE0AADD4EB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services", "backend\Services\Services.csproj", "{3B0F6092-C7DE-431D-9F0D-EBCE0AADD4EB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Entities", "Entities\Entities.csproj", "{7D616CF7-FF56-4C2C-A86D-9ED12F70A282}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Entities", "backend\Entities\Entities.csproj", "{7D616CF7-FF56-4C2C-A86D-9ED12F70A282}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "backend\Tests\Tests.csproj", "{38AAE90E-951A-4955-8D11-F301055A5F91}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{38AAE90E-951A-4955-8D11-F301055A5F91}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,13 +43,7 @@ Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{68B618F5-7876-4393-8FE5-4F80A9FE4C27} = {2083B7CA-304F-4B32-B387-BBED753D089F}
-		{EB73A4AE-BD5A-4E9F-B261-37CDF7942AEB} = {2083B7CA-304F-4B32-B387-BBED753D089F}
-		{3B0F6092-C7DE-431D-9F0D-EBCE0AADD4EB} = {2083B7CA-304F-4B32-B387-BBED753D089F}
-		{7D616CF7-FF56-4C2C-A86D-9ED12F70A282} = {2083B7CA-304F-4B32-B387-BBED753D089F}
-		{38AAE90E-951A-4955-8D11-F301055A5F91} = {2083B7CA-304F-4B32-B387-BBED753D089F}
-	EndGlobalSection
+	
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2AD95CFF-D29E-4726-85EF-C74A8BE00814}
 	EndGlobalSection
