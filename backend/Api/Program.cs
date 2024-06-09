@@ -1,5 +1,6 @@
 using FundDataApi.Data;
 using FundDataApi.Entities.Domain;
+using FundDataApi.Services.DataManagement;
 using FundDataApi.Services.ExternalFinancialApi;
 using FundDataApi.Services.HistoricalData;
 using FundDataApi.Services.Stocks;
@@ -51,10 +52,25 @@ app.MapGet("/stocks/{id}/aggregated-data", async (int id, [FromQuery] int years,
 
 app.MapGet("/funds/{id}/stocks", async (int id, [FromQuery] string? searchTerm, IMediator mediator, CancellationToken cancellationToken) =>
 {
-    return await  mediator.Send(new StocksQuery(FundId:id, searchTerm), cancellationToken);
+    return await mediator.Send(new StocksQuery(FundId:id, searchTerm), cancellationToken);
 })
 .WithName("Fund Stocks")
 .WithTags("Funds")
+.WithOpenApi();
+
+app.MapGet("/data/latest-loaded", async(IMediator mediator, CancellationToken cancellationToken) => 
+{
+    return await mediator.Send(new LatestLoadedDateQuery(), cancellationToken);
+})
+.WithName("Latest Loaded Date")
+.WithTags("Data Management")
+.WithOpenApi();
+
+app.MapPost("/data/load", async(IMediator mediator, CancellationToken cancellationToken) => {
+    return await mediator.Send(new LoadHistoricalDataCommand());
+})
+.WithName("Load Data")
+.WithTags("Data Management")
 .WithOpenApi();
 
 using (var scope = app.Services.CreateScope())

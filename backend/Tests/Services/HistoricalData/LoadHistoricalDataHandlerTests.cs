@@ -1,8 +1,8 @@
 using AutoFixture;
 using FluentAssertions;
 using FundDataApi.Entities.Domain;
+using FundDataApi.Services.DataManagement;
 using FundDataApi.Services.ExternalFinancialApi;
-using FundDataApi.Services.HistoricalData;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 
